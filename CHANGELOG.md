@@ -17,6 +17,26 @@
      you know what to do).
 -->
 
+## Release 2.19.0 (2024-09-18)
+
+### Improvements
+
+- `codeql database analyze` and `codeql database interpret-results` now support
+  the `--sarif-run-property` option. You can provide this option when using a SARIF
+  output format to add a key-value pair to the property bag of the run object.
+
+### Miscellaneous
+
+- The build of Eclipse Temurin OpenJDK that is used to run the CodeQL
+  CLI has been updated to version 21.0.4.
+
+## Release 2.18.4 (2024-09-12)
+
+### New Features
+
+- C# support for `build-mode: none` is now out of beta, and generally available.
+- Go 1.23 is now supported.
+
 ## Release 2.18.3 (2024-08-28)
 
 - There are no user-facing changes in this release.
