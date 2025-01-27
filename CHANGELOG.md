@@ -16,6 +16,49 @@
      checklist for a CLI release, you can edit here. But then
      you know what to do).
 -->
+
+## Release 2.20.3 (2025-01-24)
+
+### Security Updates
+
+- Resolves a security vulnerability where CodeQL databases or logs produced by the CodeQL CLI may contain the environment variables from the time of
+  database creation. This includes any secrets stored in an environment variables. For more information, see the
+  [CodeQL CLI security advisory](https://github.com/github/codeql-cli-binaries/security/advisories/GHSA-gqh3-9prg-j95m).
+
+  All users of CodeQL should follow the advice in the CodeQL advisory mentioned above or upgrade to this version or a later version of CodeQL.
+
+  If you are using the CodeQL Action, also see the related [CodeQL Action security advisory](https://github.com/github/codeql-action/security/advisories/GHSA-vqf5-2xx6-9wfm).
+
+## Release 2.20.2 (2025-01-22)
+
+### Improvements
+
+- `codeql database create` and `codeql database finalize` now write relations to disk in a new, compressed format. As a result, databases will generally take up less space on disk, whether zipped or unzipped. Note that databases in this format can only be read and analyzed using CodeQL version 2.20.1 onwards. Attempting to analyze such a database with CodeQL version 2.20.0 or older will fail, with an error message like the following:
+  ```
+  UnsortedExtensionalError: Tuples that were assumed to be in order are not: [123456777, 777654321, 123456777]<[777654321, 123456777, 777654321]
+  ```
+
+### Enhancements
+
+- Added the `.bitLength()` method to `QlBuiltins::BigInt`.
+
+### Bugs Fixed
+
+- Fixed a bug where CodeQL would crash on rare occasions while merging SARIF files before uploading results.
+
+## Release 2.20.1 (2025-01-09)
+
+### Improvements
+
+- Automatic installation of dependencies for C++ autobuild is now supported on Ubuntu 24.04.
+
+- The CLI will now warn if it detects that it is installed in a
+  location where it is likely to cause performance issues. This
+  includes: user home, desktop, downloads, or the file system root.
+
+  You can avoid this warning by setting the `CODEQL_ALLOW_INSTALLATION_ANYWHERE`
+  environment variable to `true`.
+
 ## Release 2.20.0 (2024-12-09)
 
 ### Known issues
@@ -618,7 +661,7 @@
 
 - Fixed an issue where CodeQL would sometimes incorrectly report that no files
   were scanned when running on Windows.
-  This affected the human-readable summary produced by `codeql database analyze`
+  This affected the human-readable summary produced by `codeql database analyze`
   and `codeql database interpret-results`, but did not impact the file coverage
   information produced in the SARIF output and displayed on the tool status page.
 - When analyzing Swift codebases, CodeQL build tracing will now ignore the
