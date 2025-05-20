@@ -1,4 +1,6 @@
 name: Label issue
+permissions:
+  issues: write
 on:
   issues:
     types: [opened]
