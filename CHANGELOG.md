@@ -17,6 +17,25 @@
      you know what to do).
 -->
 
+## Release 2.22.3 (2025-08-06)
+
+### New features
+
+- The `codeql database cleanup` command now takes the `--cache-cleanup=overlay`
+  option, which trims the cache to just the data that will be useful when
+  evaluating against an overlay.
+
+## Release 2.22.2 (2025-07-29)
+
+### Bug fix
+
+- Fixes a bug in query suites where the `version` property of an `import` instruction was ignored. Previously, the following query suite would _not_ resolve to `v1.0.19` of `codeql/csharp-queries`. Instead it would resolve to the latest version. This is now fixed and the resolve pack version would be `v1.0.19`.
+  ```
+   - from: codeql/csharp-queries
+     import: codeql-suites/csharp-security-and-quality.qls
+     version: 1.0.19
+  ```
+
 ## Release 2.22.1 (2025-06-26)
 
 ### New features
