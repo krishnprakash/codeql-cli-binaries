@@ -17,6 +17,111 @@
      you know what to do).
 -->
 
+## Release 2.24.2 (2026-02-20)
+
+### Bug Fixes
+
+- Fixed SARIF output to generate RFC 1738 compatible file URIs. File URIs now always use the `file:///` format instead of `file:/` for better interoperability with SARIF consumers.
+
+## Release 2.24.1 (2026-02-05)
+
+### Miscellaneous
+
+- The vulnerable xwork-core 2.3.37 test dependency (CVE-2025-68493) has been removed. The CodeQL Java library has been updated to support both legacy Struts 2.x-6.x package names and Struts 7.x package names for analyzing user code.
+
+## Release 2.24.0 (2026-01-26)
+
+### Miscellaneous
+
+- The OWASP Java HTML Sanitizer library used by the CodeQL CLI for internal
+  documentation generation commands has been updated to version
+  [20260102.1](https://github.com/OWASP/java-html-sanitizer/releases/tag/release-20260102.1).
+- The build of Eclipse Temurin OpenJDK that is used to run the CodeQL
+  CLI has been updated to version 21.0.9.
+
+## Release 2.23.9 (2026-01-09)
+
+### Deprecations
+
+- Support for Kotlin version 1.6 and 1.7 has been deprecated and will be removed from CodeQL version 2.24.1. Starting with version 2.24.1, users will need to use Kotlin version >= 1.8 to extract Kotlin databases.
+
+## Release 2.23.8 (2025-12-10)
+
+This release contains no CLI changes.
+
+## Release 2.23.7 (2025-12-05)
+
+### Deprecations
+
+- The `--save-cache` flag to `codeql database run-queries` and other commands that execute queries has been deprecated. This flag previously instructed the evaluator to aggressively write intermediate results to the disk cache, but now has no effect.
+
+## Release 2.23.6 (2025-11-24)
+
+### Breaking changes
+
+- The LGTM results format for uploading to LGTM has been removed.
+
+## Release 2.23.5 (2025-11-13)
+
+### Breaking changes
+
+- In order to make a `@kind path-problem` query diff-informed, the `getASelectedSourceLocation` and `getASelectedSinkLocation` predicates in the dataflow configuration now need to be overridden to always return the location of the source/sink _in addition to_ any other locations that are selected by the query. See the [QLdoc](https://github.com/github/codeql/blob/d122534398c5eb9182a23a9ad65caa5937d627b5/shared/dataflow/codeql/dataflow/DataFlow.qll#L474) for more details.
+
+## Release 2.23.4
+
+This release was skipped.
+
+## Release 2.23.3 (2025-10-17)
+
+### Breaking changes
+
+- The `--permissive` command line option has been removed from the C/C++ extractor,
+  and passing the option will make the extractor fail. The option was introduced to
+  make the extractor accept the following invalid code, which is accepted by gcc with
+  the `-fpermissive` flag:
+
+  ```cpp
+  void f(char*);
+  void g() {
+    const char* str = "string";
+    f(str);
+  }
+  ```
+
+  The `--permissive` option was removed, as under some circumstances it would break the extractor's ability to parse valid C++ code. When calling the extractor directly,
+  `--permissive` should no longer be passed. The above code will fail to parse, and we
+  recommend the code being made `const`-correct.
+
+### Bugs fixed
+
+- Fixed a bug that made many `codeql` subcommands fail with the
+  message `not in while, until, select, or repeat loop` on Linux or
+  macOS systems where `/bin/sh` is `zsh`.
+
+## Release 2.23.2 (2025-10-02)
+
+### New features
+
+- CodeQL Go analysis now supports the "Git Source" type for [private package registries](https://docs.github.com/en/code-security/securing-your-organization/enabling-security-features-in-your-organization/giving-org-access-private-registries). This is in addition to the existing support for the "GOPROXY server" type.
+
+### Bugs Fixed
+
+- The `codeql generate query-help` command now prepends the query's name (taken from the `.ql` file) as a level-one heading when processing markdown query help, for consistency with help generated from a `.qhelp` file.
+
+## Release 2.23.1 (2025-09-23)
+
+### New features
+
+- CodeQL now adds the sources and sinks of path alerts to the `relatedLocations`
+  property of SARIF results if they are not included as the primary location or
+  within the alert message. This means that path alerts will show on PRs if a
+  source or sink is added or modified, even for queries that don't follow the
+  common convention of selecting the sink as the primary location and mentioning
+  the source in the alert message.
+
+- CodeQL now populates file coverage information for GitHub Actions on
+  [the tool status page for code scanning](https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/about-the-tool-status-page#viewing-the-tool-status-page-for-a-repository).
+
 ## Release 2.23.0 (2025-09-04)
 
 ### Miscellaneous
@@ -132,7 +237,7 @@
 
 - On macOS the `CODEQL_TRACER_RELOCATION_EXCLUDE` environment variable can now be used to exclude certain paths from the
   tracer relocation and tracing process. This environment variable accepts newline-separated regex patterns of binaries
-  to be excluded.  
+  to be excluded.
 
 ## Release 2.20.7 (2025-03-18)
 
