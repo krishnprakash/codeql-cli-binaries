@@ -16,6 +16,19 @@
      checklist for a CLI release, you can edit here. But then
      you know what to do).
 -->
+
+## Release 2.25.6 (2026-06-04)
+
+### Improvements
+
+- When the `git` executable is available, CodeQL can now obtain configuration and
+  queries from SHA-256 Git repositories, and infer Git metadata about them.
+
+### Miscellaneous
+
+- The build of Eclipse Temurin OpenJDK that is used to run the CodeQL
+  CLI has been updated to version 21.0.11.
+
 ## Release 2.25.5 (2026-05-21)
 
 - There are no user-facing changes in this release.
